@@ -1,4 +1,5 @@
 mod space_invaders;
+mod systems;
 
 use crate::space_invaders::SpaceInvaders;
 use amethyst::{
@@ -30,7 +31,12 @@ fn main() -> amethyst::Result<()> {
     let game_data = GameDataBuilder::default()
         .with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?
         .with_bundle(TransformBundle::new())?
-        .with_bundle(input_bundle)?;
+        .with_bundle(input_bundle)?
+        .with(
+            systems::SpacecraftSystem,
+            "spacecraft_sytem",
+            &["input_system"],
+        );
 
     Application::new("./", SpaceInvaders, game_data)?.run();
     Ok(())

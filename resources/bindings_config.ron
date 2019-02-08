@@ -1,6 +1,6 @@
 (
   axes: {
-    "spaceship": Emulated(pos: Key(Right), neg: Key(Left)),
+    "spacecraft": Emulated(pos: Key(Right), neg: Key(Left)),
   },
   actions: {},
 )

@@ -9,10 +9,10 @@ use amethyst::{
     },
 };
 
-const ARENA_HEIGHT: f32 = 300.0;
+pub const ARENA_HEIGHT: f32 = 300.0;
 const ARENA_WIDTH: f32 = 250.0;
 
-const SPACECRAFT_HEIGHT: f32 = 17.0;
+pub const SPACECRAFT_HEIGHT: f32 = 17.0;
 const SPACECRAFT_WIDTH: f32 = 26.0;
 
 pub struct SpaceInvaders;
@@ -26,14 +26,12 @@ impl SimpleState for SpaceInvaders {
         // `texture` is the pixel data.
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        world.register::<Spacecraft>();
-
         initialise_spacecraft(world, sprite_sheet_handle);
         initialise_camera(world);
     }
 }
 
-struct Spacecraft {
+pub struct Spacecraft {
     pub width: f32,
     pub height: f32,
 }
