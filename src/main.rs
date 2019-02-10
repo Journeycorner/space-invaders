@@ -36,7 +36,8 @@ fn main() -> amethyst::Result<()> {
             systems::SpacecraftSystem,
             "spacecraft_sytem",
             &["input_system"],
-        );
+        )
+        .with(systems::AliensSystem { x_moves: 0 }, "aliens_system", &[]);
 
     Application::new("./", SpaceInvaders, game_data)?.run();
     Ok(())

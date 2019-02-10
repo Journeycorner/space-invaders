@@ -4,16 +4,25 @@ use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
     prelude::*,
     renderer::{
-        Camera, Flipped, PngFormat, Projection, SpriteRender, SpriteSheet, SpriteSheetFormat,
+        Camera, PngFormat, Projection, SpriteRender, SpriteSheet, SpriteSheetFormat,
         SpriteSheetHandle, Texture, TextureMetadata,
     },
 };
 
-pub const ARENA_HEIGHT: f32 = 300.0;
-const ARENA_WIDTH: f32 = 250.0;
+pub const ARENA_HEIGHT: f32 = 640.0;
+const ARENA_WIDTH: f32 = 480.0;
 
 pub const SPACECRAFT_HEIGHT: f32 = 17.0;
 const SPACECRAFT_WIDTH: f32 = 26.0;
+
+pub const JELLY_FISH_ALIEN_HEIGHT: f32 = 17.0;
+const JELLY_FISH_ALIEN_WIDTH: f32 = 26.0;
+
+pub const MONSTER_ALIEN_HEIGHT: f32 = 17.0;
+const MONSTER_ALIEN_WIDTH: f32 = 26.0;
+
+pub const MUSHROOM_ALIEN_HEIGHT: f32 = 17.0;
+const MUSHROOM_ALIEN_WIDTH: f32 = 26.0;
 
 pub struct SpaceInvaders;
 
@@ -26,7 +35,12 @@ impl SimpleState for SpaceInvaders {
         // `texture` is the pixel data.
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        initialise_spacecraft(world, sprite_sheet_handle);
+        world.register::<JellyFishAlien>();
+        world.register::<MonsterAlien>();
+        world.register::<MushroomAlien>();
+
+        initialise_spacecraft(world, sprite_sheet_handle.clone());
+        initialise_aliens(world, sprite_sheet_handle);
         initialise_camera(world);
     }
 }
@@ -46,6 +60,60 @@ impl Spacecraft {
 }
 
 impl Component for Spacecraft {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct JellyFishAlien {
+    pub width: f32,
+    pub height: f32,
+}
+
+impl JellyFishAlien {
+    fn new() -> JellyFishAlien {
+        JellyFishAlien {
+            width: JELLY_FISH_ALIEN_HEIGHT,
+            height: JELLY_FISH_ALIEN_WIDTH,
+        }
+    }
+}
+
+impl Component for JellyFishAlien {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct MonsterAlien {
+    pub width: f32,
+    pub height: f32,
+}
+
+impl MonsterAlien {
+    fn new() -> MonsterAlien {
+        MonsterAlien {
+            width: JELLY_FISH_ALIEN_HEIGHT,
+            height: JELLY_FISH_ALIEN_WIDTH,
+        }
+    }
+}
+
+impl Component for MonsterAlien {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct MushroomAlien {
+    pub width: f32,
+    pub height: f32,
+}
+
+impl MushroomAlien {
+    fn new() -> MonsterAlien {
+        MonsterAlien {
+            width: MUSHROOM_ALIEN_HEIGHT,
+            height: MUSHROOM_ALIEN_WIDTH,
+        }
+    }
+}
+
+impl Component for MushroomAlien {
     type Storage = DenseVecStorage<Self>;
 }
 
@@ -99,7 +167,7 @@ fn initialise_spacecraft(world: &mut World, sprite_sheet_handle: SpriteSheetHand
     // Assign the sprites for the spacecraft
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 0, // paddle is the first sprite in the sprite_sheet
+        sprite_number: 0, // spacecraft is the first sprite in the sprite_sheet
     };
 
     let mut left_transform = Transform::default();
@@ -108,8 +176,94 @@ fn initialise_spacecraft(world: &mut World, sprite_sheet_handle: SpriteSheetHand
     // Create the spacecraft.
     world
         .create_entity()
-        .with(sprite_render.clone())
+        .with(sprite_render)
         .with(Spacecraft::new())
         .with(left_transform)
         .build();
+}
+
+// /// Initialises initialise_spacecraft.
+fn initialise_aliens(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+    // Create the jelly fish aliens.
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 1,
+    };
+    let mut x = 30.0;
+    let mut y = 400.0;
+    for i in 0..11 {
+        let mut left_transform = Transform::default();
+        left_transform.set_xyz(x, y, 0.0);
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(JellyFishAlien::new())
+            .with(left_transform)
+            .build();
+        x += 27.0;
+    }
+
+    // Create the monster aliens.
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 2,
+    };
+    let mut x = 30.0;
+    let mut y = 350.0;
+    for i in 0..11 {
+        let mut left_transform = Transform::default();
+        left_transform.set_xyz(x, y, 0.0);
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(MonsterAlien::new())
+            .with(left_transform)
+            .build();
+        x += 27.0;
+    }
+    let mut x = 30.0;
+    let mut y = 300.0;
+    for i in 0..11 {
+        let mut left_transform = Transform::default();
+        left_transform.set_xyz(x, y, 0.0);
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(MonsterAlien::new())
+            .with(left_transform)
+            .build();
+        x += 27.0;
+    }
+
+    // Create the mushroom aliens.
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 3,
+    };
+    let mut x = 30.0;
+    let mut y = 250.0;
+    for i in 0..11 {
+        let mut left_transform = Transform::default();
+        left_transform.set_xyz(x, y, 0.0);
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(MushroomAlien::new())
+            .with(left_transform)
+            .build();
+        x += 27.0;
+    }
+    let mut x = 30.0;
+    let mut y = 200.0;
+    for i in 0..11 {
+        let mut left_transform = Transform::default();
+        left_transform.set_xyz(x, y, 0.0);
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(MushroomAlien::new())
+            .with(left_transform)
+            .build();
+        x += 27.0;
+    }
 }

@@ -9,10 +9,22 @@
             height: 17,
         ),
         (
-            x: 4,
-            y: 0,
-            width: 4,
-            height: 4,
+            x: 0,
+            y: 15,
+            width: 16,
+            height: 16,
+        ),
+        (
+            x: 66,
+            y: 15,
+            width: 22,
+            height: 16,
+        ),
+        (
+            x: 139,
+            y: 15,
+            width: 25,
+            height: 16,
         ),
     ],
 )

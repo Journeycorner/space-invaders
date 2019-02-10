@@ -5,9 +5,10 @@ Work in progress!
 
 ## TODO
 - [x] move spacecraft
-- [ ] spawn aliens
+- [x] spawn aliens
 - [ ] move aliens
 - [ ] enable shooting
 - [ ] implement win / lose conditions
 - [ ] implement sound
+- [ ] implement alternating alien sprites
 
