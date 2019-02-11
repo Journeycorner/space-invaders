@@ -66,6 +66,7 @@ impl Component for Spacecraft {
 pub struct JellyFishAlien {
     pub width: f32,
     pub height: f32,
+    pub time_since_move: f32,
 }
 
 impl JellyFishAlien {
@@ -73,6 +74,7 @@ impl JellyFishAlien {
         JellyFishAlien {
             width: JELLY_FISH_ALIEN_HEIGHT,
             height: JELLY_FISH_ALIEN_WIDTH,
+            time_since_move: 0.0,
         }
     }
 }
@@ -202,6 +204,7 @@ fn initialise_aliens(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
             .build();
         x += 27.0;
     }
+
 
     // Create the monster aliens.
     let sprite_render = SpriteRender {
