@@ -86,6 +86,7 @@ impl Component for JellyFishAlien {
 pub struct MonsterAlien {
     pub width: f32,
     pub height: f32,
+    pub time_since_move: f32,
 }
 
 impl MonsterAlien {
@@ -93,6 +94,7 @@ impl MonsterAlien {
         MonsterAlien {
             width: JELLY_FISH_ALIEN_HEIGHT,
             height: JELLY_FISH_ALIEN_WIDTH,
+            time_since_move: 0.0,
         }
     }
 }
@@ -104,13 +106,15 @@ impl Component for MonsterAlien {
 pub struct MushroomAlien {
     pub width: f32,
     pub height: f32,
+    pub time_since_move: f32,
 }
 
 impl MushroomAlien {
-    fn new() -> MonsterAlien {
-        MonsterAlien {
+    fn new() -> MushroomAlien {
+        MushroomAlien {
             width: MUSHROOM_ALIEN_HEIGHT,
             height: MUSHROOM_ALIEN_WIDTH,
+            time_since_move: 0.0,
         }
     }
 }
@@ -204,7 +208,6 @@ fn initialise_aliens(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
             .build();
         x += 27.0;
     }
-
 
     // Create the monster aliens.
     let sprite_render = SpriteRender {

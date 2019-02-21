@@ -16,15 +16,15 @@ impl Default for Direction {
   }
 }
 
-pub struct AliensSystem {
+pub struct JellyFishAlienSystem {
   pub x_moves: i32,
   pub time_since_move: i32,
   pub direction: Direction,
 }
 
-impl Default for AliensSystem {
+impl Default for JellyFishAlienSystem {
   fn default() -> Self {
-    AliensSystem {
+    JellyFishAlienSystem {
       x_moves: 0,
       time_since_move: 0,
       direction: Default::default(),
@@ -32,7 +32,7 @@ impl Default for AliensSystem {
   }
 }
 
-impl<'s> System<'s> for AliensSystem {
+impl<'s> System<'s> for JellyFishAlienSystem {
   type SystemData = (
     WriteStorage<'s, Transform>,
     WriteStorage<'s, JellyFishAlien>,
@@ -70,14 +70,14 @@ impl<'s> System<'s> for AliensSystem {
 
     for (mut alien, transform) in (&mut aliens, &mut transforms).join() {
       alien.time_since_move += time.delta_seconds();
-      if alien.time_since_move > 0.1 {
+      if alien.time_since_move > 1.0 {
         alien.time_since_move = 0.0;
         match &self.direction {
           Direction::Right => {
-            transform.translate_x(3.0);
+            transform.translate_x(6.0);
           }
           Direction::Left => {
-            transform.translate_x(-3.0);
+            transform.translate_x(-6.0);
           }
         }
       }

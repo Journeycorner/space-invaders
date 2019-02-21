@@ -1,1 +1,0 @@
-C:\Users\Florian\ Reisecker\projects\space-invaders\target\release\space-invaders.pdb: C:\Users\Florian\ Reisecker\projects\space-invaders\src\main.rs C:\Users\Florian\ Reisecker\projects\space-invaders\src\space_invaders.rs
